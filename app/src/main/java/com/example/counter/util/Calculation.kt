@@ -26,10 +26,8 @@ class Calculation {
                     }
                     else -> {
                         throw IllegalArgumentException("Invalid operator: $operator")
-
                     }
                 }
-
             }
             return result
         }
