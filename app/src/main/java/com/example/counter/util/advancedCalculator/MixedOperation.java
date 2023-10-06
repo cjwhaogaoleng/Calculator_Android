@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.math.BigDecimal;
 
-class MixedOperation{ //混合运算类
+public class MixedOperation{ //混合运算类
     private final int accuracy; //保存设置的运算精度
     // private final Pattern p = Pattern.compile("(^-|(?<=\\D)-)?[\\d.]+|[+\\-*\\/%!()√^πe]|log|ln|a?sin|a?cos|a?tan"); //用于匹配运算符和参数的正则表达式
     private final Pattern p = Pattern.compile("(^-|(?<=\\D)-)?[\\d.]+|[+\\-*\\/%!()√^]|log"); //用于匹配运算符和参数的正则表达式
@@ -24,7 +24,7 @@ class MixedOperation{ //混合运算类
     // public BigDecimalMath bdm = new BigDecimalMath(34); //精确到小数点后34位
     public BigDecimalMath bdm;
 
-    MixedOperation(int accuracy){ //构造函数，初始化运算符优先级及精度
+    public MixedOperation(int accuracy){ //构造函数，初始化运算符优先级及精度
         this.accuracy = accuracy;
         bdm = new BigDecimalMath(accuracy); //调用BigDecimal的构造函数设置运算精度
 
