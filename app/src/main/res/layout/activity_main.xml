@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="click"
+            type="android.view.View.OnClickListener" />
+
+        <variable
+            name="myViewModel"
+            type="com.example.counter.module.main.MainViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        tools:context=".module.main.MainActivity">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:paddingTop="10sp"
+            android:layout_marginTop="20dp"
+            android:layout_height="80sp"
+            app:menu="@menu/main_menu"
+            />
+        <TextView
+            android:id="@+id/tv_input"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:maxLines="1"
+            android:paddingBottom="5dp"
+            android:textSize="30sp"
+            android:padding="15sp"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_clr"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                android:text="C" />
+
+            <Button
+                android:id="@+id/btn_del"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                android:text="⬅" />
+
+            <Button
+                android:id="@+id/btn_div"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                android:text="/" />
+
+            <Button
+                android:id="@+id/btn_mul"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                android:text="×" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_7"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+                android:text="7" />
+
+            <Button
+                android:id="@+id/btn_8"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                android:text="8" />
+
+            <Button
+                android:id="@+id/btn_9"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                android:text="9" />
+
+            <Button
+                android:id="@+id/btn_sub"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                android:text="-" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_4"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                android:text="4" />
+
+            <Button
+                android:id="@+id/btn_5"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                android:text="5" />
+
+            <Button
+                android:id="@+id/btn_6"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                android:text="6" />
+
+            <Button
+                android:id="@+id/btn_add"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="10dp"
+
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                android:text="+" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_1"
+                        style="@style/buttonStyle1"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                        android:text="1" />
+
+                    <Button
+                        android:id="@+id/btn_2"
+                        style="@style/buttonStyle1"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="@{(view)->myViewModel.click2(view)}"
+
+
+                        android:text="2" />
+
+                    <Button
+                        android:id="@+id/btn_3"
+                        style="@style/buttonStyle1"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                        android:text="3" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_0"
+                        style="@style/buttonStyle1"
+                        android:layout_width="170dp"
+                        android:layout_height="80dp"
+                        android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                        android:text="0" />
+
+                    <Button
+                        android:id="@+id/btn_pt"
+                        style="@style/buttonStyle1"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginLeft="10dp"
+                        android:onClick="@{(view)->myViewModel.click2(view)}"
+
+                        android:text="." />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_eq"
+                style="@style/buttonStyle1"
+                android:layout_width="80dp"
+                android:layout_height="170dp"
+                android:layout_marginLeft="10dp"
+                android:onClick="@{(view)->myViewModel.click2(view)}"
+                android:text="=" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>
