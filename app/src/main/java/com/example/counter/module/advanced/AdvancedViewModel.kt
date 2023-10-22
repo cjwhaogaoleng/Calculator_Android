@@ -3,12 +3,20 @@ package com.example.counter.module.advanced
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Application
+import android.os.Build
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
+import com.example.counter.bean.DataBean
 import com.example.counter.module.advanced.AdvancedCalculatorActivity.Companion.binding
 import com.example.counter.util.advancedCalculator.MixedOperation
+import com.google.gson.Gson
+import okhttp3.FormBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.math.BigDecimal
 import java.text.DecimalFormat
 
@@ -18,7 +26,9 @@ class AdvancedViewModel(application: Application) : AndroidViewModel(application
     var context: Activity? = null
 
     private var input: String = ""
-    private var output = BigDecimal("0") //���������
+
+    //    private var output = BigDecimal("0") //���������
+    private var output = MutableLiveData<String>()
 
     private val eq = MixedOperation(10)
 
@@ -29,6 +39,7 @@ class AdvancedViewModel(application: Application) : AndroidViewModel(application
 
     private val df = DecimalFormat()
 
+    @RequiresApi(Build.VERSION_CODES.P)
     @SuppressLint("SetTextI18n")
     fun click(view: View) {
         try {
@@ -44,14 +55,19 @@ class AdvancedViewModel(application: Application) : AndroidViewModel(application
                     input += (view).text
                     canOpe = true
                 }
-                "+", "-", "*", "/" -> {
+                "+", "-", "×", "÷" -> {
                     if (canOpe) {
                         input += (view).text
                         canOpe = false
                     }
                 }
                 binding.btEqual.text -> {
-                    output = eq.getMixedOperationRes(input)
+//                    output = eq.getMixedOperationRes(input)
+                    //获取结果
+                    getResult(view, if (RadFlag) "yes" else "no")
+
+
+
                     calculateFlag = true
                 }
 
@@ -64,22 +80,23 @@ class AdvancedViewModel(application: Application) : AndroidViewModel(application
                 }
 
                 binding.btMod.text -> {
-                    input += "%"
+                    input += "mod"
                 }
 
                 binding.btFactorial.text ,"n!"-> {
-                    Log.d(TAG, "click: "+"dao")
-                    output = eq.bdm.fac(input.toInt())
-                    Log.d(TAG, "click: $output")
+                    input += "!"
+
+
 
                 }
 
                 binding.btReciprocal.text -> {
-                    output = BigDecimal.ONE.divide(
-                        BigDecimal(input),
-                        eq.bdm.accuracy,
-                        BigDecimal.ROUND_HALF_EVEN
-                    )
+//                    output = BigDecimal.ONE.divide(
+//                        BigDecimal(input),
+//                        eq.bdm.accuracy,
+//                        BigDecimal.ROUND_HALF_EVEN
+//                    )
+                    input+="^-1"
                     calculateFlag = true
                 }
 
@@ -111,7 +128,7 @@ class AdvancedViewModel(application: Application) : AndroidViewModel(application
                         binding.btSqrt.text = "3√x"
                         binding.btSquare.text = "x^3"
                         binding.btPower.text = "n√x"
-                        binding.btLog.text = "ylogx"
+                        binding.btLog.text = "logy(x)"
                         binding.btLn.text = "e^x"
                         binding.btPi.text = "e"
                         _2ndFlag = true
@@ -119,69 +136,56 @@ class AdvancedViewModel(application: Application) : AndroidViewModel(application
                 }
 
                 "sin" -> {
-                    output = eq.bdm.sin(
-                        if (RadFlag) eq.bdm.toRadians(BigDecimal(input)) else BigDecimal(input)
-                    )
+                    input +="sin"
                     calculateFlag = true
                 }
 
                 "cos" -> {
-                    output = eq.bdm.cos(
-                        if (RadFlag) eq.bdm.toRadians(BigDecimal(input)) else BigDecimal(input)
-                    )
+
+                    input+="cos"
                     calculateFlag = true
                 }
 
                 "tan" -> {
-                    output = eq.bdm.tan(
-                        if (RadFlag) eq.bdm.toRadians(BigDecimal(input)) else BigDecimal(input)
-                    )
+
+                    input+="tan"
                     calculateFlag = true
                 }
 
                 "asin" -> {
-                    output =
-                        if (RadFlag) eq.bdm.toDegrees(eq.bdm.asin(BigDecimal(input))) else eq.bdm.asin(
-                            BigDecimal(input)
-                        )
+
+                    input+="asin"
                     calculateFlag = true
                 }
                 "acos" -> {
-                    output =
-                        if (RadFlag) eq.bdm.toDegrees(eq.bdm.acos(BigDecimal(input))) else eq.bdm.acos(
-                            BigDecimal(input)
-                        )
+                    input += "acos"
+
                     calculateFlag = true
                 }
 
                 "atan" -> {
-                    output =
-                        if (RadFlag) eq.bdm.toDegrees(eq.bdm.atan(BigDecimal(input))) else eq.bdm.atan(
-                            BigDecimal(input)
-                        )
+                    input += "atan"
+
                     calculateFlag = true
                 }
                 "2√x" -> {
-                    output = eq.bdm.pow(BigDecimal(input), BigDecimal("0.5"))
+                    input += "^1/2"
+
                     calculateFlag = true
                 }
                 "3√x" -> {
-                    output = eq.bdm.pow(
-                        BigDecimal(input),
-                        BigDecimal.ONE.divide(
-                            BigDecimal("3"),
-                            eq.bdm.accuracy,
-                            BigDecimal.ROUND_HALF_EVEN
-                        )
-                    )
+
+                    input+="^1/3"
                     calculateFlag = true
                 }
                 "x^2" -> {
-                    output = eq.bdm.pow(BigDecimal(input), BigDecimal("2"))
+
+                    input+="^2"
                     calculateFlag = true
                 }
                 "x^3" -> {
-                    output = eq.bdm.pow(BigDecimal(input), BigDecimal("3"))
+
+                    input+="^3"
                     calculateFlag = true
                 }
                 "x^n" -> {
@@ -191,26 +195,26 @@ class AdvancedViewModel(application: Application) : AndroidViewModel(application
                     input += "√"
                 }
                 "log" -> {
-                    output = eq.bdm.log(BigDecimal.TEN, BigDecimal(input))
+                    input+="log"
                     calculateFlag = true
                 }
-                "ylogx" -> {
+                "logy(x)" -> {
                     input += "log"
                 }
                 "ln" -> {
-                    output = eq.bdm.log(BigDecimal(input))
+input+="ln"
                     calculateFlag = true
                 }
                 "e^x" -> {
-                    output = eq.bdm.pow(eq.bdm.e, BigDecimal(input))
+input+="e^"
                     calculateFlag = true
                 }
                 "π" -> {
-                    output = eq.bdm.pi
+input+="π"
                     calculateFlag = true
                 }
                 "e" -> {
-                    output = eq.bdm.e
+input+="e"
                     calculateFlag = true
                 }
             }
@@ -219,7 +223,6 @@ class AdvancedViewModel(application: Application) : AndroidViewModel(application
         }
         finally {
             binding.tvProcess.text = input
-            binding.tvResult.text = df.format(output).toString()
 
             if (calculateFlag) {
                 input = output.toString()
@@ -228,6 +231,35 @@ class AdvancedViewModel(application: Application) : AndroidViewModel(application
         }
 
     }
+    @RequiresApi(Build.VERSION_CODES.P)
+    private fun getResult(view: View, deg: String) {
+
+        val okHttpClient = OkHttpClient.Builder()
+            .build()
+
+        val body = FormBody.Builder().add("formula", input)
+            .add("deg", deg)
+            .build()
+
+        val request =
+            Request.Builder().url("http://8.130.110.171:80/get_result/").post(body)
+                .build()
+
+        val call = okHttpClient?.newCall(request)
+
+        var bean: DataBean = DataBean()
+        Thread {
+            val response = call?.execute()
+
+            bean =
+                Gson().fromJson<DataBean>(response!!.body()!!.string(), DataBean::class.java)
+
+            context?.runOnUiThread {
+                binding.tvResult.text = bean.result
+            }
+        }.start()
+    }
+
 
 
 }

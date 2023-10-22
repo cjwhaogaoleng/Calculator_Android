@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.counter.R
 import com.example.counter.databinding.ActivityMainBinding
 import com.example.counter.module.advanced.AdvancedCalculatorActivity
+import com.example.counter.module.history.HistoryActivity
 import com.example.counter.util.StatusBar
 
 class MainActivity : AppCompatActivity() {
@@ -80,7 +81,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu -> startActivity(Intent(this, AdvancedCalculatorActivity::class.java))
+            R.id.menu_advanced -> startActivity(
+                Intent(
+                    this,
+                    AdvancedCalculatorActivity::class.java
+                )
+            )
+            R.id.menu_history -> startActivity(Intent(this, HistoryActivity::class.java))
+
         }
         return true
     }

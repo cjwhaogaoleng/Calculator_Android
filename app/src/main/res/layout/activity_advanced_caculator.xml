@@ -247,7 +247,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="@{(view)->click.click(view)}"
-                android:text="/"
+                android:text="÷"
 
                 app:layout_constraintBottom_toTopOf="@+id/button2"
                 app:layout_constraintStart_toStartOf="parent" />
